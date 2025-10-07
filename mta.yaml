@@ -1,0 +1,149 @@
+_schema-version: 3.3.0
+ID: intellibase_ui
+description: A simple CAP project.
+version: 1.0.0
+modules:
+- name: intellibase_ui-srv
+  type: nodejs
+  path: gen/srv
+  requires:
+  - name: intellibase_ui-db
+  - name: intellibase_ui-auth
+  - name: intellibase_ui-destination
+  provides:
+  - name: srv-api
+    properties:
+      srv-url: ${default-url}
+  parameters:
+    buildpack: nodejs_buildpack
+    instances: 1
+  build-parameters:
+    builder: npm-ci
+- name: intellibase_ui-db-deployer
+  type: hdb
+  path: gen/db
+  requires:
+  - name: intellibase_ui-db
+  parameters:
+    buildpack: nodejs_buildpack
+- name: intellibase_ui-app-deployer
+  type: com.sap.application.content
+  path: gen
+  requires:
+  - name: intellibase_ui-auth
+  - name: srv-api
+  - name: intellibase_ui-html5-repo-host
+    parameters:
+      config:
+        HTML5Runtime_enabled: true
+      content-target: true
+  parameters:
+    config:
+      HTML5Runtime_enabled: true
+      init_data:
+        instance:
+          destinations:
+          - Authentication: NoAuthentication
+            HTML5.DynamicDestination: true
+            HTML5.ForwardAuthToken: true
+            Name: srv-api
+            ProxyType: Internet
+            Type: HTTP
+            URL: ~{srv-api/srv-url}
+          - Authentication: NoAuthentication
+            Name: ui5
+            ProxyType: Internet
+            Type: HTTP
+            URL: https://ui5.sap.com
+          existing_destinations_policy: update
+  build-parameters:
+    build-result: app/
+    requires:
+    - artifacts:
+      - intellibaseui.zip
+      name: intellibaseui
+      target-path: app/
+- name: intellibase_ui-destination-content
+  type: com.sap.application.content
+  requires:
+  - name: intellibase_ui-destination-service
+    parameters:
+      content-target: true
+  - name: intellibase_ui-html5-repo-host
+    parameters:
+      service-key:
+        name: intellibase_ui-html5-repo-host-key
+  - name: intellibase_ui-auth
+    parameters:
+      service-key:
+        name: intellibase_ui-auth-key
+  parameters:
+    content:
+      instance:
+        destinations:
+        - Name: Intellibase_intellibase_ui_html5_repo_host
+          ServiceKeyName: intellibase_ui-html5-repo-host-key
+          sap.cloud.service: Intellibase
+        - Authentication: OAuth2UserTokenExchange
+          Name: Intellibase_intellibase_ui_auth
+          ServiceInstanceName: intellibase_ui-auth
+          ServiceKeyName: intellibase_ui-auth-key
+          sap.cloud.service: Intellibase
+        existing_destinations_policy: ignore
+  build-parameters:
+    no-source: true
+- name: intellibaseui
+  type: html5
+  path: app/intellibase_ui
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+resources:
+- name: intellibase_ui-db
+  type: com.sap.xs.hdi-container
+  parameters:
+    service: hana
+    service-plan: hdi-shared
+- name: intellibase_ui-auth
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      tenant-mode: dedicated
+      xsappname: intellibase_ui-${org}-${space}
+    path: ./xs-security.json
+    service: xsuaa
+    service-plan: application
+- name: intellibase_ui-destination
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      HTML5Runtime_enabled: false
+      init_data:
+        instance:
+          destinations:
+          - Authentication: NoAuthentication
+            Name: ui5
+            ProxyType: Internet
+            Type: HTTP
+            URL: https://ui5.sap.com
+          existing_destinations_policy: update
+    service: destination
+    service-plan: lite
+- name: intellibase_ui-html5-repo-host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-host
+parameters:
+  deploy_mode: html5-repo
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+  - builder: custom
+    commands:
+    - npm ci
+    - npx cds build --production
