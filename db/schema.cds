@@ -1,9 +1,9 @@
 namespace com.scb.intellibase;
 
 entity PromptsData {
-    category     : String;
-    product       : Integer;
-    prompt        : String;
+    category      : String;
+    product       : String;
+    key prompt    : String;
     description   : String;
     //   parameter columns
     selProduct    : String;
