@@ -1,6 +1,57 @@
-<mvc:View controllerName="intellibaseui.controller.MainView"
-    xmlns:mvc="sap.ui.core.mvc"
-    xmlns="sap.m">
-    <Page id="page" title="{i18n>title}">
-    </Page>
+<mvc:View
+  controllerName="intellibaseui.controller.MainView"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m"
+  xmlns:l="sap.ui.layout"
+  xmlns:core="sap.ui.core"
+  displayBlock="true">
+
+  <Page title="How can I help you?">
+    <l:Grid defaultSpan="L6 M12 S12" width="100%">
+      <l:content>
+        <VBox class="sapUiSmallMargin" width="100%">
+
+          <!-- Category + Product Dropdowns -->
+          <HBox>
+            <Select
+                id="categorySelect"
+                items="{
+                path : 'categories>/'
+                }"
+                change=".onCategoryChange">
+                <core:Item key="{categories>category}" text="{categories>category}" />
+            </Select>
+
+            <Select
+                id="productSelect"
+                items="{products>/}"
+                change=".onProductChange">
+                <core:Item key="{products>product}" text="{products>product}" />
+            </Select>
+          </HBox>
+
+          <!-- Prompt + Description List -->
+          <List
+              id="promptList"
+              mode="SingleSelectMaster"
+              selectionChange="onSelectPrompt">
+          </List>
+
+        </VBox>
+      </l:content>
+
+      <!-- RIGHT SIDE --> 
+      <l:content> 
+      <VBox class="sapUiSmallMargin"> 
+      <Title text="Freeform Prompt" level="H2"/> 
+      <TextArea id="selectedPrompt" class="sapUiTinyMarginTop sapUiTinyMarginBottom" width="100%"/> 
+      <Panel headerText="Keyword Info" expandable="false"> <VBox id="keywordBox"> 
+      <Text text="Select a prompt to see keyword details."/> 
+      </VBox> 
+      </Panel> 
+      <Button id="askFinsight" text="Ask FinSight" type="Emphasized" class="sapUiTinyMarginTop" press="onPressButton"/>
+      </VBox> 
+      </l:content>
+    </l:Grid>
+  </Page>
 </mvc:View>
