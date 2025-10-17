@@ -5,7 +5,7 @@
     "serviceType": "Local CAP",
     "metadataFilename": "",
     "serviceUrl": "http://localhost:4004/odata/v4/catalog/",
-    "appName": "intellibase_ui",
+    "appName": "intellibaseui",
     "appTitle": "Intellibase",
     "appDescription": "An SAP Fiori application.",
     "appNamespace": "",
@@ -19,6 +19,6 @@
     "template": "Basic V4",
     "generatorName": "SAP Fiori Application Generator",
     "entityRelatedConfig": [],
-    "launchText": "To launch the generated app, start your CAP project:  and navigate to the following location in your browser:\n\nhttp://localhost:4004/intellibase_ui/webapp/index.html"
+    "launchText": "To launch the generated app, start your CAP project:  and navigate to the following location in your browser:\n\nhttp://localhost:4004/intellibaseui/webapp/index.html"
   }
 }

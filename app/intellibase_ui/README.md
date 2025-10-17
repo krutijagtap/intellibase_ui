@@ -8,7 +8,7 @@
 |**Template Used**<br>Basic V4|
 |**Service Type**<br>Local CAP|
 |**Service URL**<br>http://localhost:4004/odata/v4/catalog/|
-|**Module Name**<br>intellibase_ui|
+|**Module Name**<br>intellibaseui|
 |**Application Title**<br>Intellibase|
 |**Namespace**<br>|
 |**UI5 Theme**<br>sap_horizon|
@@ -17,7 +17,7 @@
 |**Enable TypeScript**<br>False|
 |**Add Eslint configuration**<br>False|
 
-## intellibase_ui
+## intellibaseui
 
 An SAP Fiori application.
 
@@ -25,7 +25,7 @@ An SAP Fiori application.
 
 -   This app has been generated using the SAP Fiori tools - App Generator, as part of the SAP Fiori tools suite.  To launch the generated app, start your CAP project:  and navigate to the following location in your browser:
 
-http://localhost:4004/intellibase_ui/webapp/index.html
+http://localhost:4004/intellibaseui/webapp/index.html
 
 #### Pre-requisites:
 

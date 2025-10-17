@@ -1,20 +1,43 @@
 {
-  "xsappname": "intellibase_ui",
+  "xsappname": "intellibaseui",
   "tenant-mode": "dedicated",
-  "description": "Security profile of called application",
   "scopes": [
     {
       "name": "uaa.user",
       "description": "UAA"
+    },
+    {
+      "name": "$XSAPPNAME.Support",
+      "description": "Support"
+    },
+    {
+      "name": "$XSAPPNAME.ContentChecker",
+      "description": "ContentChecker"
+    },
+    {
+      "name": "$XSAPPNAME.ContentMaker",
+      "description": "ContentMaker"
     }
   ],
   "role-templates": [
+
     {
-      "name": "Token_Exchange",
-      "description": "UAA",
-      "scope-references": [
-        "uaa.user"
-      ]
+      "name": "Workzone_EFDNA_GenAI_intellibase_ui_Checker",
+      "description": "Workzone_EFDNA_GenAI_intellibase_ui_Checker",
+      "scope-references": ["$XSAPPNAME.ContentChecker"]
+    },
+    {
+      "name": "Workzone_EFDNA_GenAI_intellibase_ui_Maker",
+      "description": "Workzone_EFDNA_GenAI_intellibase_ui_Maker",
+      "scope-references": ["$XSAPPNAME.ContentMaker"]
     }
-  ]
+  ],
+  "oauth2-configuration": {
+    "token-validity": 3600,
+    "redirect-uris": [
+      "https://*-intellibaseui-app.cfapps.*.hana.ondemand.com/login/callback",
+      "https://*.cfapps.*.ondemand.com/**",
+      "https://*.cfapps.*.hana.ondemand.com/**"
+    ]
+  }
 }

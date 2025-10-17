@@ -7,15 +7,15 @@ entity PromptsData {
     description   : String;
     //   parameter columns
     selProduct    : String;
-    ipCountry     : String;
+    selCountry     : String;
     selModel      : String;
     selCouponType : String;
     selMetric     : String;
     selCOBDate    : String;
     selAttribute  : String;
-    ipISIN        : String;
-    ipMonthYear   : String;
-    ipPortfolio   : String;
+    selISIN        : String;
+    selMonthYear   : String;
+    selPortfolio   : String;
     // keyword columns
     keyProduct    : String;
     keyCountry    : String;

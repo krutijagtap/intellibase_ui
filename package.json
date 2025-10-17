@@ -1,5 +1,5 @@
 {
-  "name": "intellibase_ui",
+  "name": "intellibaseui",
   "version": "1.0.0",
   "description": "A simple CAP project.",
   "repository": "<Add your repository here>",
@@ -9,7 +9,14 @@
     "@sap/cds": "^9",
     "express": "^4",
     "@cap-js/hana": "^2",
-    "@sap/xssec": "^4"
+    "@sap/xssec": "^4",
+    "@sap-cloud-sdk/connectivity": "^4.1.1",
+    "axios": "^1.11.0",
+    "dompurify": "^3.2.6",
+    "form-data": "^4.0.4",
+    "hana": "^0.0.2",
+    "sap-cf-axios": "^1.0.2",
+    "sqlite3": "^5.1.7"
   },
   "engines": {
     "node": ">=20"
@@ -25,8 +32,8 @@
   },
   "scripts": {
     "start": "cds-serve",
-    "watch-intellibase_ui": "cds watch --open intellibaseui/index.html?sap-ui-xx-viewCache=false --livereload false",
-    "undeploy": "cf undeploy intellibase_ui --delete-services --delete-service-keys --delete-service-brokers",
+    "watch-intellibaseui": "cds watch --open intellibaseui/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "undeploy": "cf undeploy intellibaseui --delete-services --delete-service-keys --delete-service-brokers",
     "build": "rimraf resources mta_archives && mbt build --mtar archive",
     "deploy": "cf deploy mta_archives/archive.mtar --retries 1"
   },
